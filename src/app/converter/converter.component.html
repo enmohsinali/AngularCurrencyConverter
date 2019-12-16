@@ -1,0 +1,45 @@
+<div class="card-deck mb-3">
+    <div class="card mb-4 box-shadow">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Converter</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <form [formGroup]="currencyForm">
+              <div class="form-group row">
+                <label for="amount" class="col-md-4 col-form-label" >Amount</label>
+                <div class="col-md-8">
+                  <input id="amount" type="number" class="form-control" #amount formControlName="amount" (ngModelChange)="convert()">
+                  <div class="invalid-feedback" *ngIf="form().amount.errors" >Please enter amount.</div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="staticEmail" class="col-md-4 col-form-label">From</label>
+                <div class="col-md-8">
+                  <select class="form-control" #from formControlName="from" (change)="FromCurrencyChange(from.value)">
+                    <option [value]="currency.key" *ngFor="let currency of currencies | keyvalue" > {{currency.key}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPassword" class="col-md-4 col-form-label">To</label>
+                <div class="col-md-8">
+                  <select class="form-control" #to formControlName="to" (change)="ToCurrencyChange()">
+                    <option [value]="currency.key" *ngFor="let currency of currencies | keyvalue"> {{currency.key}}</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          
+          <div class="spinner-border" role="status" [hidden]="!loading">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="col-md-6" [hidden]="loading || amount.value==''">
+            <h2>{{amount.value}} {{from.value}} is equals to {{result | number :'1.2-2' }} {{to.value}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
